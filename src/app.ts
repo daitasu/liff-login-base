@@ -1,11 +1,11 @@
 // ライブラリ読み込み
-import express from 'express';
+import express, { Request, Response } from 'express';
 import router from './routes';
 
 const app = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 8000;
 
@@ -15,7 +15,7 @@ app.use('/', router);
 //  404
 // -------------------------------------------------
 
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404);
   if (req.accepts('json')) {
     res.send({ error: 'Not found' });
@@ -23,8 +23,6 @@ app.use((req, res) => {
   }
   res.type('txt').send('Not found');
 });
-
-
 
 app.listen(port);
 console.log('listen on port ' + port);
