@@ -1,15 +1,30 @@
 // ライブラリ読み込み
 import express, { Request, Response } from 'express';
 import router from './routes';
+import passport from './lib/passport';
+import session from 'express-session';
+import views from './routes/views';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  session({
+    secret: 'fanhabi',
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const port = process.env.PORT || 8000;
 
-app.use('/api/v1/', router);
+app.use('/api/v1', router);
+app.use('/views', views);
 
 // -------------------------------------------------
 //  404
