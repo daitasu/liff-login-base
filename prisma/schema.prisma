@@ -11,19 +11,19 @@ generator client {
   previewFeatures = ["nativeTypes"]
 }
 
-model Users {
-  id           String       @id @default(cuid())
-  twitterId    String
+model User {
+  id           String     @id @default(cuid())
+  twitterId    String     @unique
   username     String
   displayName  String?
   profileImage String
-  activities   Activities[]
-  Habits       Habits[]
+  activities   Activity[]
+  Habits       Habit[]
 }
 
-model Activities {
+model Activity {
   id         String   @id @default(cuid())
-  user       Users    @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
   userId     String
   startedAt  DateTime
   finishedAt DateTime
@@ -31,9 +31,9 @@ model Activities {
   updatedAt  DateTime @updatedAt
 }
 
-model Habits {
+model Habit {
   id          String @id @default(cuid())
-  user        Users  @relation(fields: [userId], references: [id])
+  user        User   @relation(fields: [userId], references: [id])
   userId      String
   name        String @db.VarChar(50)
   description String @db.VarChar(1000)

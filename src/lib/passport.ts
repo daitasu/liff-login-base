@@ -1,6 +1,11 @@
 ﻿import passport from 'passport';
 import { Strategy as TwitterStrategy, Profile } from 'passport-twitter';
 import dotenv from 'dotenv';
+import {
+  createUser,
+  findUniqueUserByTwitterId,
+  findUniqueUserById,
+} from '../models/user';
 
 dotenv.config();
 
@@ -11,19 +16,41 @@ passport.use(
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET || '',
       callbackURL: process.env.BASE_URL + '/api/v1/auth/twitter/callback',
     },
-    (token, tokenSecret, profile, done) => {
-      return done(null, profile);
+    async (token, tokenSecret, profile, done) => {
+      try {
+        let user = await findUniqueUserByTwitterId(profile.id);
+        if (!user) {
+          user = await createUser({
+            twitterId: profile.id,
+            username: profile.username,
+            displayName: profile.displayName,
+            profileImage: profile.photos?.[0].value || '',
+          });
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
   )
 );
 
-passport.serializeUser<Profile['id']>((user: Express.User, done) => {
-  const twitterUser = user as Profile;
-  done(null, twitterUser.id);
+passport.serializeUser<string>((user: Express.User, done) => {
+  const userProfile = user as Profile;
+  done(null, userProfile.id);
 });
 
-passport.deserializeUser((user: Express.User, done) => {
-  done(null, user);
+passport.deserializeUser(async (userId: string, done) => {
+  try {
+    const user = await findUniqueUserById(userId);
+    if (user) {
+      done(null, user);
+    } else {
+      done(null, false);
+    }
+  } catch (err) {
+    done(err);
+  }
 });
 
 export default passport;
