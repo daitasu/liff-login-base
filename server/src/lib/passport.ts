@@ -26,6 +26,7 @@ passport.use(
             displayName: profile.displayName,
             profileImage: profile.photos?.[0].value || '',
           });
+          console.log('user ->', user);
         }
         return done(null, user);
       } catch (err) {

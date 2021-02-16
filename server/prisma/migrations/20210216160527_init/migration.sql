@@ -1,15 +1,16 @@
 -- CreateTable
-CREATE TABLE "Users" (
+CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "accessToken" TEXT,
-    "expiresIn" INTEGER,
+    "twitterId" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
     "displayName" TEXT,
+    "profileImage" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Activities" (
+CREATE TABLE "Activity" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "startedAt" TIMESTAMP(3) NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE "Activities" (
 );
 
 -- CreateTable
-CREATE TABLE "Habits" (
+CREATE TABLE "Habit" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "name" VARCHAR(50) NOT NULL,
@@ -30,8 +31,11 @@ CREATE TABLE "Habits" (
     PRIMARY KEY ("id")
 );
 
--- AddForeignKey
-ALTER TABLE "Activities" ADD FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "User.twitterId_unique" ON "User"("twitterId");
 
 -- AddForeignKey
-ALTER TABLE "Habits" ADD FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Activity" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Habit" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
