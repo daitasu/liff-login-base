@@ -1,29 +1,20 @@
 ﻿import liff from '@line/liff';
-import { mutations } from '~/models/state';
+import { mutations as loginMutations } from '~/models/loginState';
 
-const setLoggedIn = () => {
-  mutations.SET_LOGGEDIN(liff.isLoggedIn());
-};
+export const liffInit: Promise<void> = liff.init({
+  liffId: process.env.LIFF_ID || '',
+});
 
-export const liffInit = () => {
-  liff
-    .init({
-      liffId: process.env.LIFF_ID || '',
-    })
-    .then(() => {
-      setLoggedIn();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
-export const liffLogin = () => {
-  if (!liff.isLoggedIn()) {
+export const liffIDToken: string = liff.getIDToken() || '';
+
+export const isLoggedIn: boolean = liff.isLoggedIn();
+
+export const liffLogin = (): void => {
+  if (!isLoggedIn) {
     liff.login();
-    setLoggedIn();
   }
 };
-export const liffLogout = () => {
+export const liffLogout = (): void => {
   liff.logout();
-  setLoggedIn();
+  loginMutations.SET_LOGGEDIN(liff.isLoggedIn());
 };

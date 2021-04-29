@@ -1,10 +1,10 @@
 ﻿import Vue from 'vue';
 
-type State = {
+type LoginState = {
   liffLoggedIn: boolean;
 };
 
-export const state = Vue.observable<State>({
+export const state = Vue.observable<LoginState>({
   liffLoggedIn: false,
 });
 

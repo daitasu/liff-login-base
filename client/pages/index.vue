@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, computed } from '@nuxtjs/composition-api';
 import { liffLogin, liffLogout } from '~/utils/liff';
-import { getters } from '~/models/state';
+import { getters } from '~/models/loginState';
 
 export default defineComponent({
   setup() {
