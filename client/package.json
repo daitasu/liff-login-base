@@ -20,6 +20,7 @@
     "prettier": "^2.2.1"
   },
   "dependencies": {
+    "@line/liff": "^2.9.1",
     "@nuxt/types": "^2.15.4",
     "@nuxt/typescript-build": "^2.1.0",
     "nuxt": "^2.15.0"

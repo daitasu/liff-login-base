@@ -1,6 +1,9 @@
 export default {
   ssr: false,
   target: 'static',
+  env: {
+    LIFF_ID: process.env.LIFF_ID,
+  },
   head: {
     title: 'nuxt-liff-test',
     htmlAttrs: {
@@ -12,11 +15,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [
-      { src: 'https://static.line-scdn.net/liff/edge/versions/2.8.1/sdk.js' },
-    ],
   },
-  css: [],
   plugins: [],
   components: true,
   buildModules: ['@nuxt/typescript-build'],
