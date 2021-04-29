@@ -18,6 +18,6 @@ export default {
   },
   plugins: [],
   components: true,
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],
   build: {},
 };

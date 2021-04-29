@@ -22,40 +22,46 @@
 </template>
 
 <script lang="ts">
-import { liff } from '@line/liff';
-import Vue from 'vue';
+import liff from '@line/liff';
+import { defineComponent, ref, onMounted } from '@nuxtjs/composition-api';
 
-export default Vue.extend({
-  data() {
-    return {
-      loggedin: false,
+export default defineComponent({
+  setup() {
+    const loggedin = ref(false);
+
+    const setLoginStatus = () => {
+      loggedin.value = liff.isLoggedIn();
     };
-  },
-  mounted() {
-    liff
-      .init({
-        liffId: process.env.LIFF_ID || '',
-      })
-      .then(() => {
-        this.setLoginStatus();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  },
-  methods: {
-    setLoginStatus() {
-      this.loggedin = liff.isLoggedIn();
-    },
-    handleLogin() {
+
+    const handleLogin = () => {
       if (!liff.isLoggedIn()) {
         liff.login();
+        setLoginStatus();
       }
-    },
-    handleLogout() {
+    };
+    const handleLogout = () => {
       liff.logout();
-      this.setLoginStatus();
-    },
+      setLoginStatus();
+    };
+
+    onMounted(() => {
+      liff
+        .init({
+          liffId: process.env.LIFF_ID || '',
+        })
+        .then(() => {
+          setLoginStatus();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+
+    return {
+      loggedin,
+      handleLogin,
+      handleLogout,
+    };
   },
 });
 </script>
