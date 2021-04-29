@@ -16,8 +16,10 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  router: {
+    middleware: ['initialize'],
+  },
   plugins: [],
   components: true,
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],
-  build: {},
 };

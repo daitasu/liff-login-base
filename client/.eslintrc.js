@@ -8,7 +8,6 @@
     '@nuxtjs/eslint-config-typescript',
     'plugin:prettier/recommended',
     'plugin:vue/recommended',
-    'airbnb-base',
     'prettier',
   ],
   plugins: ['vue'],
