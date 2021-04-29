@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
+import { liff } from '@line/liff';
 import Vue from 'vue';
-import liff from '@line/liff';
 
 export default Vue.extend({
   data() {

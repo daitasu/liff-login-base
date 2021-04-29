@@ -40,11 +40,6 @@
     ],
   },
   settings: {
-    'import/resolver': {
-      nuxt: {
-        extensions: ['.ts', '.d.ts', '.js', '.vue'],
-      },
-    },
     'import/core-modules': ['vue', 'vuex'],
   },
 };
