@@ -3,7 +3,6 @@
 const router = express.Router();
 
 router.get('/success', (req, res) => {
-  console.log(req.isAuthenticated());
   res.status(200).json({
     message: '成功しました',
   });

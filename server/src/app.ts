@@ -1,7 +1,6 @@
 // ライブラリ読み込み
 import express, { Request, Response } from 'express';
 import router from './routes';
-import passport from './lib/passport';
 import session from 'express-session';
 import views from './routes/views';
 
@@ -12,14 +11,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: 'fanhabi',
+    secret: 'liff-login',
     saveUninitialized: true,
     resave: true,
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 const port = process.env.PORT || 8000;
 

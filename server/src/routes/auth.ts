@@ -1,18 +1,8 @@
 ﻿import express from 'express';
-import passport from '../lib/passport';
+import { authorize } from '../controllers/auth_controller';
 
 const router = express.Router();
 
-router.get('/twitter', passport.authenticate('twitter'));
-
-router.get(
-  '/twitter/callback',
-  passport.authenticate('twitter', {
-    failureRedirect: '/views/failure',
-  }),
-  (req, res) => {
-    res.redirect('/views/success');
-  }
-);
+router.get('/', authorize);
 
 export default router;
